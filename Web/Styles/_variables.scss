@@ -1,0 +1,127 @@
+﻿$mainBackground: #666666;
+$medGreen: #18d501;
+
+/* Brand Colors */
+$brandLightestBlue: #d3ebf8;
+$brandLightBlue: #88c8ee;
+$brandBlue: #618fab;
+$brandDarkBlue: #44677d;
+$brandLightGreenTeal: #42f49e;
+$brandGreenTeal: #0bc169;
+
+/* Grays */
+$darkestGray: #262626;
+$relativelyDarkGray: #595959;
+$darkishGray: #666666;
+$medGray: #999999;
+$lightishGray: #cccccc;
+$relativelyLightGray: #e6e6e6;
+$lightestGray: #f2f2f2;
+
+/* Greens */
+$darkestGreen: #001a00;
+$relativelyDarkGreen: #006600;
+$darkishGreen: #00b300;
+$lightishGreen: #4dff4d;
+$relativelyLightGreen: #99ff99;
+$lighestGreen: #e6ffe6;
+
+/* Volume Slider */
+$sliderTrackShadow: #002200;
+$sliderTrackBlurSpread: #003c00;
+$sliderTrackBackground: #205928;
+$sliderThumbShadow: #00aa00;
+$sliderThumbBlurSpread: #00c300;
+$sliderThumbBackground: #439643;
+$sliderThumbBorder: #83e584;
+
+$break1: 481px;
+$break2: 768px;
+$break3: 992px;
+$break4: 1200px;
+$break5: 1440px;
+$break6: 1800px;
+
+
+@mixin size-phone-portrait {
+	/* width <= 480px */
+	@media (max-width: $break1 - 1) {
+		@content;
+	}
+}
+
+@mixin size-phone-landscape {
+	/* 481px >= width <= 767px */
+	@media (min-width: $break1) and (max-width: $break2 - 1) {
+		@content;
+	}
+}
+
+@mixin size-tablet-portrait {
+	/* 768px >= width <= 991px */
+	@media (min-width: $break2) and (max-width: $break3 - 1) {
+		@content;
+	}
+}
+
+@mixin size-tablet-landscape {
+	/* 992px >= width <= 1199px */
+	@media (min-width: $break3) and (max-width: $break4 - 1) {
+		@content;
+	}
+}
+
+@mixin size-desktop-small {
+	/* 1200px >= width <= 1439px */
+	@media (min-width: $break4) and (max-width: $break5 - 1) {
+		@content;
+	}
+}
+
+@mixin size-desktop-medium {
+	/* 1440px width <= 1799px */
+	@media (min-width: $break5) and (max-width: $break6 - 1) {
+		@content;
+	}
+}
+
+@mixin size-desktop-large {
+	/* 1800px >= width */
+	@media (min-width: $break6) {
+		@content;
+	}
+}
+
+@mixin size-phone {
+	@include size-phone-portrait {
+		@content;
+	}
+
+	@include size-phone-landscape {
+		@content;
+	}
+}
+
+@mixin size-tablet {
+	@include size-tablet-portrait {
+		@content;
+	}
+
+	@include size-tablet-landscape {
+		@content;
+	}
+}
+
+@mixin size-desktop {
+	@include size-desktop-small {
+		@content;
+	}
+
+	@include size-desktop-medium {
+		@content;
+	}
+
+	@include size-desktop-large {
+		@content;
+	}
+}

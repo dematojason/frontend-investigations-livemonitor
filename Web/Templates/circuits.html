@@ -1,0 +1,227 @@
+﻿<div ng-show="!vm.isPageLoading">
+	<circuit-audio dispose-event="{{ vm.disposeEvent }}" on-call-end="vm.onCallEnd()" show-facility="vm.showFacility" />
+	<br />
+	<div class="row">
+		<div class="title-box xs-12 rs-6 md-4 xl-3">
+			<div class="title">&nbsp;&nbsp;Modes&nbsp;&nbsp;</div>
+			<div class="active-buttons-container clearfix">
+				<div class="xs-3">
+					<toggle-button type="toggle" btn-click="vm.toggleOffMode()" img-src="{{ vm.offImgSrc }}" title-text="Off" toggle-enabled="vm.offModeActive" />
+				</div>
+				<div class="xs-3">
+					<toggle-button type="toggle" btn-click="vm.toggleListenMode()" img-src="{{ vm.listenImgSrc }}" title-text="Listen" toggle-enabled="vm.listenModeActive" />
+				</div>
+				<div class="xs-3">
+					<toggle-button type="toggle" btn-click="vm.toggleCycleMode()" img-src="{{ vm.cycleImgSrc }}" title-text="Cycle" toggle-enabled="vm.cycleModeActive" />
+				</div>
+				<div class="xs-3">
+					<toggle-button type="toggle" btn-click="vm.toggleParkMode()" img-src="{{ vm.parkImgSrc }}" title-text="Park" toggle-enabled="vm.parkModeActive" />
+				</div>
+			</div>
+		</div>
+		<div class="title-box xs-12 rs-6 md-4 xl-3">
+			<div class="title">&nbsp;&nbsp;Actions&nbsp;&nbsp;</div>
+			<div class="active-buttons-container clearfix">
+				<div class="xs-3">
+					<toggle-button type="toggle" btn-click="vm.togglePauseCallHistory()" img-src="{{ vm.pauseCallHistoryImgSrc }}" title-text="Pause Call History" toggle-enabled="vm.pauseCallHistoryActive" />
+				</div>
+				<div class="xs-3">
+					<toggle-button type="standard" btn-click="vm.clearCallHistory()" img-src="{{ vm.clearCallHistoryImgSrc }}" title-text="Clear Call History" />
+				</div>
+				<div class="xs-3">
+					<toggle-button type="standard" btn-click="vm.disconnectSelectedCall()" img-src="{{ vm.disconnectCallImgSrc }}" disabled="vm.disconnectingCall" title-text="Disconnect Call" />
+				</div>
+			</div>
+		</div>
+		<div class="title-box xs-12 rs-6 md-4 xl-3">
+			<div class="title">&nbsp;&nbsp;Alerts&nbsp;&nbsp;</div>
+			<div class="clearfix">
+				<div class="xs-12 title-box-row">
+					<div class="col-sm-4 label-text">Phone #:</div>
+					<div class="col-sm-8">
+						<div class="text-button-group">
+							<div class="col-sm-9 text-container">
+								<input class="form-control" type="text" placeholder="Called Phone #"
+								       ng-model="vm.settings.alertCalledNumber"
+								       ng-keypress="vm.keypressAddNumberAlert($event);"
+								       only-digits/>
+							</div>
+							<div class="col-sm-3 button-container">
+								<button class="btn btn-success"
+								        ng-click="vm.addNumberAlert(vm.settings.alertCalledNumber); vm.settings.alertCalledNumber = '';"
+								        type="button">Add</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="xs-12 title-box-row">
+					<div class="col-sm-4 label-text">Inmate:</div>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" placeholder="Name, Acct. #, or Doc ID"
+						       ng-model="vm.settings.alertInmate"
+						       tooltip-placement="right"
+						       typeahead-input-formatter="vm.formatInmate($model)"
+						       typeahead-loading="vm.isLoadingInmateTypeahead"
+						       typeahead-min-length="3"
+						       typeahead-on-select="vm.addInmateAlert($model); vm.settings.alertInmate = '';"
+						       typeahead-wait-ms="500"
+						       uib-typeahead="inmate as inmate.pinDisplay for inmate in vm.searchInmates($viewValue)" />
+						<!-- uib-tooltip="{{ vm.inmateTypeaheadTooltipText }}" -->
+					</div>
+				</div>
+				<div class="xs-12 title-box-row" ng-if="vm.settings.alertSelectedNumbers.length > 0">
+					<collapsible default="collapsed" target-id="calledNumberAlerts" text="Phone Alerts" />
+				</div>
+				<div class="xs-12 title-box-row" id="calledNumberAlerts">
+					<div ng-if="vm.settings.alertSelectedNumbers.length > 0" class="selected-option" ng-repeat="calledNumber in vm.settings.alertSelectedNumbers">
+						{{ calledNumber.display }}
+						<span class="clickable" ng-click="vm.removeNumberAlert($index)">
+							<i class="fas fa-times-circle"></i>
+						</span>
+					</div>
+				</div>
+				<div class="xs-12 title-box-row" ng-if="vm.settings.alertSelectedInmates.length > 0">
+					<collapsible default="collapsed" target-id="inmateAlerts" text="Inmate Alerts" />
+				</div>
+				<div class="xs-12 title-box-row" id="inmateAlerts">
+					<div ng-if="vm.settings.alertSelectedInmates.length > 0" class="selected-option" ng-repeat="inmate in vm.settings.alertSelectedInmates">
+						{{ inmate.nameDisplay }}&nbsp;({{ inmate.apin.trim() }})&nbsp;
+						<span class="clickable" ng-click="vm.removeInmateAlert($index)">
+							<i class="fas fa-times-circle"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="title-box xs-12 rs-6 md-4 xl-3">
+			<div class="title">&nbsp;&nbsp;Settings&nbsp;&nbsp;</div>
+			<div class="clearfix">
+				<div class="xs-12 title-box-row">
+					<div class="col-sm-8 label-text">Seconds Per Cycle:</div>
+					<div class="col-sm-4">
+						<input class="form-control" type="text" ng-model="vm.settings.secondsPerCycle" ng-model-options="{ debounce: 500 }" only-digits />
+					</div>
+				</div>
+				<div class="xs-12 title-box-row" ng-if="!vm.loadingFacilities && vm.facilities.length > 1">
+					<div class="col-sm-4 label-text">Facilities:</div>
+					<div class="col-sm-8">
+						<multiselect options="vm.facilityOptions" on-options-changed="vm.onSelectedFacilitiesChanged()" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="row">
+		<div ng-if="vm.loadingCircuits" class="xs-12">
+			<div class="xs-2 xs-offset-5">
+				<cog />
+			</div>
+		</div>
+		<div ng-if="!vm.loadingCircuits" class="xs-12">
+			<div id="circuitCtxMenu" class="ctx-menu-container" oncontextmenu="return false;">
+				<ul class="ctx-menu-options">
+					<li ng-click="vm.ctxMenuSelectCircuit()" class="option default-option">Select Circuit</li>
+					<li class="divider" ng-if="!vm.ctxMenuFromCircuits"></li>
+					<!--<li ng-if="!vm.ctxMenuFromCircuits" ng-click="vm.ctxMenuTogglePauseCallHistory()" class="option">{{ vm.pauseCallHistoryActive ? 'Unpause' : 'Pause' }} Call History</li>-->
+					<li ng-if="!vm.ctxMenuFromCircuits" ng-click="vm.ctxMenuClearCallHistory()" class="option">Clear Call History</li>
+					<li class="divider"></li>
+					<li ng-click="!vm.ctxMenuCircuitHasActiveCall() || vm.ctxMenuListen()" ng-class="{'disabled': !vm.ctxMenuCircuitHasActiveCall()}" class="option">Listen To</li>
+					<li ng-click="!vm.ctxMenuCircuitHasActiveCall() || vm.ctxMenuPark()" ng-class="{'disabled': !vm.ctxMenuCircuitHasActiveCall()}" class="option">Park on Circuit</li>
+					<li class="divider"></li>
+					<li ng-click="!vm.ctxMenuCircuitHasCalledNum() || vm.ctxMenuCreateCalledNumberAlert()" ng-class="{'disabled': !vm.ctxMenuCircuitHasCalledNum()}" class="option">Create Called Number Alert</li>
+					<li ng-click="!vm.ctxMenuCircuitHasInmate() || vm.ctxMenuCreateInmateAlert()" ng-class="{'disabled': !vm.ctxMenuCircuitHasInmate()}" class="option">Create Inmate Alert</li>
+					<li class="divider"></li>
+					<li ng-click="!vm.ctxMenuCircuitHasActiveCall() || vm.ctxMenuDisconnect()" ng-class="{'disabled': !vm.ctxMenuCircuitHasActiveCall()}" class="option">Disconnect Call</li>
+					<li class="divider"></li>
+					<li ng-click="vm.ctxMenuCancel()" class="option">Cancel</li>
+				</ul>
+			</div>
+			<div class="table-section circuits-container">
+				<h5>
+					Live Circuits ({{ vm.circuits ? vm.circuits.length : '0' }} showing)
+				</h5>
+				<table>
+					<thead>
+						<tr>
+							<th class="call-status"></th>
+							<th class="title-column circuit">Circuit</th>
+							<th class="inmate">Inmate</th>
+							<th class="called-number">Called #</th>
+						</tr>
+					</thead>
+					<!-- oncontextmenu return false prevents standard right click context menu from opening -->
+					<tbody class="data" id="circuitsTableBody" oncontextmenu="return false;" ng-if="vm.circuits && vm.circuits.length > 0">
+						<tr ng-repeat="c in vm.circuits"
+							ng-click="vm.setSelectedCircuit(c.ani, c.call.callId)"
+							ng-class="{'selected': vm.selectedCircuit && vm.selectedCircuit.ani === c.ani}"
+							ng-mousedown="vm.openCircuitCtxMenu($event, c)">
+							<td class="call-status no-ellipsis" ng-class="{'status-on': c.call.callStatus === vm.callStatus.ON,
+									'status-off': c.call.callStatus === vm.callStatus.OFF,
+									'status-blocked': c.call.callStatus === vm.callStatus.BLOCKED,
+									'status-not-recorded': c.call.callStatus === vm.callStatus.NOT_RECORDED,
+									'status-unknown': !c.call || c.call.callStatus === null || c.call.callStatus === undefined}">
+								<span class="fa fa-phone" ng-attr-title="{{ c.call ? vm.getCallStatusTitle(c.call.callStatus) : null }}"></span>
+							</td>
+							<td class="title-column circuit">{{ c.description }}</td>
+							<td class="inmate">{{ c.call.inmateName }}</td>
+							<td class="called-number">{{ c.call.calledNumber | phoneNumber }}</td>
+						</tr>
+					</tbody>
+					<tbody class="no-results" ng-if="vm.facilitiesSelected === false">
+						<tr>
+							<td><h4>No Facilities Selected</h4></td>
+						</tr>
+					</tbody>
+					<tbody class="no-results" ng-if="vm.facilitiesSelected === true && vm.circuits && vm.circuits.length === 0">
+						<tr>
+							<td><h4>No Circuits Found</h4></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="table-section call-history-container">
+				<h5>
+					Call History ({{ vm.rtcmMessages ? vm.rtcmMessages.length : '0' }} showing)
+				</h5>
+				<table id="circuitsTable" ng-class="{'show-facility': vm.showFacility, 'hide-facility': !vm.showFacility}">
+					<thead>
+						<tr>
+							<th class="call-status"></th>
+							<th class="facility" ng-class="{'title-column': vm.showFacility}">Facility</th>
+							<th class="circuit" ng-class="{'title-column': !vm.showFacility}">Circuit</th>
+							<th class="inmate">Inmate</th>
+							<th class="account-number">Account #</th>
+							<th class="called-number">Called #</th>
+							<th class="time">Time</th>
+						</tr>
+					</thead>
+					<tbody class="data" ng-if="vm.rtcmMessages && vm.rtcmMessages.length > 0">
+						<tr ng-repeat="m in vm.rtcmMessages"
+							ng-click="vm.setSelectedCircuit(m.header.ani, m.header.callId)"
+						    ng-class="{'selected': vm.selectedCircuit && m.header.ani === vm.selectedCircuit.ani}"
+						    ng-mousedown="vm.openCircuitCtxMenuFromMsg($event, m)">
+							<td class="call-status no-ellipsis" ng-class="{'status-on': m.currentStatus === vm.callStatus.ON,
+									'status-off': m.currentStatus === vm.callStatus.OFF,
+									'status-blocked': m.currentStatus === vm.callStatus.BLOCKED,
+									'status-not-recorded': m.currentStatus === vm.callStatus.NOT_RECORDED}">
+								<span class="fa fa-phone" ng-attr-title="{{ vm.getCallStatusTitle(m.currentStatus) }}"></span>
+							</td>
+							<td class="facility" ng-class="{'title-column': vm.showFacility}">{{ m.facilityName }}</td>
+							<td class="circuit" ng-class="{'title-column': !vm.showFacility}">{{ m.circuitName }}</td>
+							<td class="inmate">{{ m.inmateName }}</td>
+							<td class="account-number">{{ (m.header.pin ? m.header.pin : '') | apin }}</td>
+							<td class="called-number">{{ (m.header.calledNumber ? m.header.calledNumber : '') | phoneNumber }}</td>
+							<td class="time">{{ m.msgTime }}</td>
+						</tr>
+					</tbody>
+					<tbody class="no-results" ng-if="vm.rtcmMessages && vm.rtcmMessages.length === 0">
+						<tr>
+							<td><h4>Call History Empty</h4></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

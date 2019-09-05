@@ -1,0 +1,5 @@
+﻿<div class="collapsible" ng-class="{'expanded': !vm.collapsed}" ng-if="vm.uniqueId && vm.uniqueId !== ''">
+	<a ng-click="vm.expandCollapse()" id="{{ vm.uniqueId }}">
+		{{ vm.textHideShow }} {{ vm.text }} <span class="caret"></span>
+	</a>
+</div>

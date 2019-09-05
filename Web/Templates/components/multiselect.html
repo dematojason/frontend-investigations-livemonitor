@@ -1,0 +1,19 @@
+﻿<form ng-if="vm.uniqueId">
+	<div class="multiselect" id="{{ vm.uniqueId }}">
+		<div class="select-box" ng-click="vm.showOptions()">
+			<select>
+				<option>{{ vm.dropdownBtnText }}</option>
+			</select>
+			<div class="over-select"></div>
+		</div>
+		<div class="checkboxes" ng-class="{'expanded': vm.expanded}">
+			<input type="button" class="btn btn-default" value="Check All" ng-click="vm.checkAll()" ng-disabled="vm.talkingStickInUse" />
+			<input type="button" class="btn btn-default" value="Uncheck All" ng-click="vm.uncheckAll()" ng-disabled="vm.talkingStickInUse" />
+			<input type="text" class="form-control" ng-model="vm.search" placeholder="Search" />
+			<div class="dropdown-divider"></div>
+			<label ng-repeat="option in vm.options" ng-class="{'hidden': option.hidden}">
+				<input type="checkbox" ng-model="option.selected" ng-change="vm.itemChanged(option.selected)" />&nbsp;{{ option.label }}
+			</label>
+		</div>
+	</div>
+</form>

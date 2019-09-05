@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6419C1BA-4A13-4291-80FD-41CE1E86B8BE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CpcLiveMonitor.Utility</RootNamespace>
+    <AssemblyName>CpcLiveMonitor.Utility</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="JWT, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JWT.4.0.0\lib\net46\JWT.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ProdigyHelperLibrary, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProdigyHelperLibrary.2.0.1\lib\net471\ProdigyHelperLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProdigyHelperLibrary.2.0.1\lib\net471\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProdigyHelperLibrary.2.0.1\lib\net471\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProdigyHelperLibrary.2.0.1\lib\net471\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProdigyHelperLibrary.2.0.1\lib\net471\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProdigyHelperLibrary.2.0.1\lib\net471\System.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProdigyHelperLibrary.2.0.1\lib\net471\System.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProdigyHelperLibrary.2.0.1\lib\net471\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ValidatorsHelpersAndConverters, Version=2.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ValidatorsHelpersAndConvertersLibrary.2.0.0.7\lib\net471\ValidatorsHelpersAndConverters.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DbAccessor.cs" />
+    <Compile Include="Dtos\DomainDto.cs" />
+    <Compile Include="Dtos\DomainFacilityDto.cs" />
+    <Compile Include="Dtos\FacilityDto.cs" />
+    <Compile Include="Dtos\GetInmateArgs.cs" />
+    <Compile Include="Dtos\InmateAccountDto.cs" />
+    <Compile Include="EntityFramework\Nexus\Entities\Circuit.cs" />
+    <Compile Include="EntityFramework\Nexus\Entities\GlobalNumber.cs" />
+    <Compile Include="EntityFramework\Nexus\Entities\PinId.cs" />
+    <Compile Include="EntityFramework\Nexus\Entities\PinPhone.cs" />
+    <Compile Include="EntityFramework\Nexus\Entities\WildcardGlobalNumber.cs" />
+    <Compile Include="EntityFramework\Nexus\Mapping\CircuitMap.cs" />
+    <Compile Include="EntityFramework\Nexus\Mapping\GlobalNumberMap.cs" />
+    <Compile Include="EntityFramework\Nexus\Mapping\PinIdMap.cs" />
+    <Compile Include="EntityFramework\Nexus\Mapping\PinPhoneMap.cs" />
+    <Compile Include="EntityFramework\Nexus\Mapping\WildcardGlobalNumberMap.cs" />
+    <Compile Include="EntityFramework\Nexus\NexusContext.cs" />
+    <Compile Include="EntityFramework\Scidyn\Entities\Domain.cs" />
+    <Compile Include="EntityFramework\Scidyn\Entities\DomainFacility.cs" />
+    <Compile Include="EntityFramework\Scidyn\Entities\Facility.cs" />
+    <Compile Include="EntityFramework\Scidyn\Entities\User.cs" />
+    <Compile Include="EntityFramework\Scidyn\Entities\UserPermission.cs" />
+    <Compile Include="EntityFramework\Scidyn\Mapping\DomainFacilityMap.cs" />
+    <Compile Include="EntityFramework\Scidyn\Mapping\DomainMap.cs" />
+    <Compile Include="EntityFramework\Scidyn\Mapping\FacilityMap.cs" />
+    <Compile Include="EntityFramework\Scidyn\Mapping\UserMap.cs" />
+    <Compile Include="EntityFramework\Scidyn\Mapping\UserPermissionMap.cs" />
+    <Compile Include="EntityFramework\Scidyn\ScidynContext.cs" />
+    <Compile Include="Extensions\DataRecordExtensions.cs" />
+    <Compile Include="Extensions\SqlCommandExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helpers\AsyncHelper.cs" />
+    <Compile Include="Helpers\Caching.cs" />
+    <Compile Include="Helpers\SqlHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

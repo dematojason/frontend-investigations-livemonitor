@@ -1,0 +1,50 @@
+﻿@{
+	ViewBag.Title = "Live Monitor Login";
+}
+
+<div class="container body-content" ng-controller="AccountController as vm" ng-init="vm.init(@(ViewBag.Token))" ng-cloak>
+	<div class="row login-form-container">
+		<div ng-if="vm.isLoading">
+			<div style="text-align: center;">
+				<div ng-if="vm.showBob">
+					<custom-cog />
+				</div>
+				<div ng-if="!vm.showBob">
+					<cog />
+				</div>
+			</div>
+		</div>
+		<div ng-if="!vm.isLoading" class="xs-12 rs-offset-1 rs-10 sm-offset-3 sm-6 lg-offset-4 lg-4">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					Login
+				</div>
+				<div class="panel-body">
+					<form name="loginForm" ng-submit="vm.login()">
+						<div class="row">
+							<div class="xs-12 input-container">
+								<div class="xs-3">Username:</div>
+								<div class="xs-9">
+									<input class="form-control" type="text" ng-model="vm.username" name="lmusername" placeholder="Username or Email" minlength="5" autofocus required />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="xs-12 input-container">
+								<div class="xs-3">Password:</div>
+								<div class="xs-9">
+									<input class="form-control" type="password" ng-model="vm.password" placeholder="Password" minlength="3" required />
+								</div>
+							</div>
+						</div>
+
+						<br />
+						<button class="btn btn-success btn-on-xs-only btn-on-sm-only" type="submit" ng-disabled="vm.isLoading">
+							<i class="fa fa-plus"></i> Login
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

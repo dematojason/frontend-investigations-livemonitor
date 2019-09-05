@@ -1,0 +1,13 @@
+{
+	"Header": {
+		"EventCode": 2039,
+		"Id": 2
+	},
+	"Data": {
+		"SiteId": "S001022111",
+		"StartDateTime": "20190107",
+		"TerminateCode": "00",
+		"BlockCode": "00",
+		"Duration": "900"
+	}
+}

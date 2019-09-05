@@ -1,0 +1,17 @@
+{
+	"Header": {
+		"EventCode": 2038,
+		"Id": 1
+	},
+	"Data": {
+		"Ani": "1234567890",
+		"CalledNumber": "2398740972",
+		"CallId": 1,
+		"LineId": 1,
+		"MaxDuration": 900,
+		"Pin": "123456",
+		"SiteId": "S001022111",
+		"StartDateTime": "20190107",
+		"UnitId": 1
+	}
+}

@@ -1,0 +1,6 @@
+﻿<!-- ng-if is to make sure element doesn't try to load before a unique ID is generated. -->
+<div ng-if="vm.uniqueId && vm.uniqueId !== '' && vm.type">
+	<button class="lm-btn" ng-class="{'lm-btn-{{ vm.type }}': vm.type}" id="{{ vm.uniqueId }}" ng-click="vm.btnClick()" title="{{ vm.titleText }}">
+		<img ng-src="{{ vm.imgSrc }}" alt="{{ vm.titleText }}" />
+	</button>
+</div>

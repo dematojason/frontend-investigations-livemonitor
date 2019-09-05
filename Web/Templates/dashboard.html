@@ -1,0 +1,234 @@
+﻿<div style="padding: 10px;">
+	<h2>Dashboard</h2>
+	<div ng-if="!vm.isConnected">
+		<cog />
+	</div>
+	<div ng-if="vm.isConnected">
+		<div class="row" ng-show="vm.isConnected">
+			<div class="pull-right">
+				<div>Connected to SignalR: <strong>{{ vm.connectionId }}</strong></div>
+			</div>
+		</div>
+
+		<div ng-show="vm.isConnected">
+			<div class="panel panel-primary">
+				<div class="panel-heading" style="font-size: large">
+					Add New RTCM Message
+				</div>
+
+				<div class="panel-body">
+					<form name="newRtcmForm">
+						<div class="row" style="padding-left: 10px;">
+							<h4>Headers</h4>
+						</div>
+						<br />
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="col-sm-5">Call ID:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" ng-model="vm.newMsgHeader.callId" />
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="col-sm-5">ANI:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" ng-model="vm.newMsgHeader.ani" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="col-sm-5">Site ID:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" ng-model="vm.newMsgHeader.siteId" />
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="col-sm-5">Line ID:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" ng-model="vm.newMsgHeader.lineId" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="col-sm-5">Unit ID:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" ng-model="vm.newMsgHeader.unitId" />
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="col-sm-5">Favorite Color:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" style="color: green;" value="Green" title="sorry not sorry" disabled="disabled" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="col-sm-5">PIN:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" ng-model="vm.newMsgHeader.pin" />
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="col-sm-5">Called Number:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" ng-model="vm.newMsgHeader.calledNumber" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="col-sm-5">Start Date Time:</div>
+								<div class="col-sm-7">
+									<input class="form-control" type="text" ng-model="vm.newMsgHeader.startDateTime" />
+								</div>
+							</div>
+						</div>
+						<br />
+
+						<uib-tabset active="activeForm">
+							<uib-tab index="0" heading="Call Start" select="vm.onCallStartSelected()">
+								<br />
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="col-sm-5">Max Duration</div>
+										<div class="col-sm-7">
+											<input class="form-control" min="0" max="900" type="number" ng-model="vm.newStartMsgData.maxDuration" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+								</div>
+							</uib-tab>
+							<uib-tab index="1" heading="Call End" select="vm.onCallEndSelected()">
+								<br />
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="col-sm-5">Block Code</div>
+										<div class="col-sm-7">
+											<input class="form-control" type="text" ng-model="vm.newEndMsgData.blockCode" />
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="col-sm-5">Terminate Code</div>
+										<div class="col-sm-7">
+											<input class="form-control" type="text" ng-model="vm.newEndMsgData.terminateCode" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="col-sm-5">Duration</div>
+										<div class="col-sm-7">
+											<input class="form-control" type="text" ng-model="vm.newEndMsgData.duration" />
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="col-sm-5">Favorite Game:</div>
+										<div class="col-sm-7">
+											<input class="form-control" type="text" value="Oldschool Runescape" title="not subjective" disabled="disabled" />
+										</div>
+									</div>
+								</div>
+							</uib-tab>
+						</uib-tabset>
+
+						<br />
+						<button class="btn btn-success btn-on-xs-only btn-on-sm-only" ng-click="vm.addRtcmMsg()">
+							<i class="fa fa-plus"></i> Create
+						</button>
+						<button class="btn btn-danger btn-on-xs-only btn-on-sm-only" ng-click="vm.removeAllMessages()">
+							<i class="fa fa-trash"></i> Clear All
+						</button>
+						<button class="btn btn-default btn-on-xs-only btn-on-sm-only" ng-click="vm.setInputDefaults">
+							<i class="fa fa-bath"></i> Reset
+						</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-heading" style="font-size: large">
+					{{ vm.titleStartMsgTable }}
+				</div>
+
+				<div class="panel-body">
+					<table class="table" ng-if="vm.getCallStartMessages().length > 0">
+						<thead>
+							<tr>
+								<td>Call ID</td>
+								<td>ANI</td>
+								<td>Site ID</td>
+								<td>Line ID</td>
+								<td>Unit ID</td>
+								<td>PIN</td>
+								<td>Called #</td>
+								<td>Start Date</td>
+								<td>Max Duration</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="msg in vm.getCallStartMessages()">
+								<td>{{ msg.header.callId }}</td>
+								<td>{{ msg.header.ani }}</td>
+								<td>{{ msg.header.siteId }}</td>
+								<td>{{ msg.header.lineId }}</td>
+								<td>{{ msg.header.unitId }}</td>
+
+								<td>{{ msg.data.pin }}</td>
+								<td>{{ msg.header.calledNumber }}</td>
+								<td>{{ msg.header.startDateTime }}</td>
+								<td>{{ msg.data.maxDuration }}</td>
+							</tr>
+						</tbody>
+					</table>
+					<div ng-if="vm.getCallStartMessages().length === 0">
+						<span>No Results Found</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-heading" style="font-size: large">
+					{{ vm.titleEndMsgTable }}
+				</div>
+
+				<div class="panel-body">
+					<table class="table" ng-if="vm.getCallEndMessages().length > 0">
+						<thead>
+							<tr>
+								<td>Call ID</td>
+								<td>ANI</td>
+								<td>Site ID</td>
+								<td>Line ID</td>
+								<td>Unit ID</td>
+
+								<td>Block Code</td>
+								<td>Terminate Code</td>
+								<td>Duration</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="msg in vm.getCallEndMessages()">
+								<td>{{ msg.header.callId }}</td>
+								<td>{{ msg.header.ani }}</td>
+								<td>{{ msg.header.siteId }}</td>
+								<td>{{ msg.header.lineId }}</td>
+								<td>{{ msg.header.unitId }}</td>
+
+								<td>{{ msg.data.blockCode }}</td>
+								<td>{{ msg.data.terminateCode }}</td>
+								<td>{{ msg.data.duration }}</td>
+							</tr>
+						</tbody>
+					</table>
+					<div ng-if="vm.getCallEndMessages().length === 0">
+						<span>No Results Found</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

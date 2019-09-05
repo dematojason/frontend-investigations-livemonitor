@@ -1,0 +1,59 @@
+﻿<div class="audio-container">
+	<div class="xs-12">
+		<collapsible target-id="audioPlayerContainer" text="Audio Section" />
+	</div>
+	<div id="audioPlayerContainer" class="xs-12">
+		<div class="audio-section xs-12 sm-6 lg-8">
+			<!--Note: the below canvas element has its width attribute value dynamically changed within the circuitaudio component's intialization-->
+			<canvas class="audio-canvas" id="audioCanvas"></canvas>
+			<div ng-if="vm.audioCtx && vm.audioCtx.destination" class="audio-buffering" layout-sm="column" layout-align="space-around">
+				<md-progress-circular md-mode="indeterminate" ng-show="vm.buffering"></md-progress-circular>
+			</div>
+			<div class="icon-container">
+				<div class="volume-overlay">
+					<span class="clickable" ng-class="{'ng-hide': !vm.streamingAudio || vm.buffering}"
+					      title="{{ vm.volume === 0 ? 'Unmute' : 'Mute' }}" ng-click="vm.muteUnmute()">
+						<i ng-class="{'fa fa-volume-up': vm.volume >= 50, 'fa fa-volume-down': vm.volume < 50 && vm.volume > 0, 'fa fa-volume-mute': vm.volume === 0}"></i>
+					</span>
+					<div class="volume-container" ng-class="{'ng-hide': !vm.streamingAudio || vm.buffering}">
+						<input ng-model="vm.volume" ng-change="vm.onVolumeChange()" type="range" title="Volume" min="0" max="100" step="1" value="50" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="circuit-info-section xs-12 sm-6 lg-4">
+			<div class="xs-12" ng-if="vm.circuitInfoDisplay">
+				<div class="call-info-table-wrapper">
+					<table>
+						<tbody>
+							<tr ng-if="vm.showFacility">
+								<td>Facility</td>
+								<td>{{ vm.circuitInfoDisplay.facilityName }}</td>
+							</tr>
+							<tr>
+								<td>Circuit</td>
+								<td>{{ vm.circuitInfoDisplay.circuitDescription }}</td>
+							</tr>
+							<tr>
+								<td>Inmate</td>
+								<td>{{ vm.circuitInfoDisplay.inmate }}</td>
+							</tr>
+							<tr>
+								<td>Called #</td>
+								<td>{{ vm.circuitInfoDisplay.calledNumber }}</td>
+							</tr>
+							<tr>
+								<td>Call Start</td>
+								<td>{{ vm.circuitInfoDisplay.startTime }}</td>
+							</tr>
+							<tr>
+								<td>Call End</td>
+								<td>{{ vm.circuitInfoDisplay.endTime }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

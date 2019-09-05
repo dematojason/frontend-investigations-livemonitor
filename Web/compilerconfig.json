@@ -1,0 +1,17 @@
+[
+	//{
+	//	"outputFile": "Styles/tables.css",
+	//	"inputFile": "Styles/tables.scss",
+	//	"sourceMap": false
+	//},
+	//{
+	//	"outputFile": "Styles/tables.css",
+	//	"inputFile": "Styles/tables.scss",
+	//	"sourceMap": false
+	//},
+	{
+		"outputFile": "Styles/site.css",
+		"inputFile": "Styles/site.scss",
+		"sourceMap": false
+	}
+]
